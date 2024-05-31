@@ -1280,7 +1280,7 @@ static NSAttributedString *DefaultTruncationAttributedString()
   static NSAttributedString *defaultTruncationAttributedString;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    defaultTruncationAttributedString = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"\u2026", @"Default truncation string")];
+    defaultTruncationAttributedString = [[NSAttributedString alloc] initWithString:@"\u2026"];
   });
   return defaultTruncationAttributedString;
 }
