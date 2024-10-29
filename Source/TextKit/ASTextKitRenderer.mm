@@ -229,10 +229,20 @@ static NSCharacterSet *_defaultAvoidTruncationCharacterSet()
 
       NSRange glyphRange = [layoutManager glyphRangeForBoundingRect:(CGRect){ .size = textContainer.size } inTextContainer:textContainer];
       LOG(@"boundingRect: %@", NSStringFromCGRect([layoutManager boundingRectForGlyphRange:glyphRange inTextContainer:textContainer]));
-      
+
+      if(layoutManager.textStorage == nil) {
+        NSTextStorage *emptyTextStorage = [[NSTextStorage alloc] initWithString:@""];
+        [emptyTextStorage addLayoutManager:layoutManager];
+      } else if(layoutManager.textStorage.string == nil) {
+        NSTextStorage *emptyTextStorage = [[NSTextStorage alloc] initWithString:@""];
+        
+        [layoutManager.textStorage removeLayoutManager:layoutManager];
+        [emptyTextStorage addLayoutManager:layoutManager];
+      }
+
       [layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:shadowInsetBounds.origin];
       [layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:shadowInsetBounds.origin];
-      
+
       if (isScaled) {
         // put the non-scaled version back
         [scaledTextStorage removeLayoutManager:layoutManager];
