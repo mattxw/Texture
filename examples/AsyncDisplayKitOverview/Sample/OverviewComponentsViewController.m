@@ -532,7 +532,7 @@ typedef ASLayoutSpec *(^OverviewDisplayNodeSizeThatFitsBlock)(ASSizeRange constr
         OverviewTitleDescriptionCellNode *cellNode = [OverviewTitleDescriptionCellNode new];
         
         NSDictionary *titleNodeAttributes = @{
-            NSFontAttributeName : [UIFont boldSystemFontOfSize:14.0],
+            NSFontAttributeName : [UIFont boldSystemFontOfSize:13.0],
             NSForegroundColorAttributeName : [UIColor blackColor]
         };
         cellNode.titleNode.attributedText = [[NSAttributedString alloc] initWithString:node.entryTitle attributes:titleNodeAttributes];

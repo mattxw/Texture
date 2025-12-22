@@ -10,7 +10,7 @@
 #import "ItemStyles.h"
 
 const CGFloat kTitleFontSize = 20.0;
-const CGFloat kInfoFontSize = 14.0;
+const CGFloat kInfoFontSize = 13.0;
 
 UIColor *kTitleColor;
 UIColor *kInfoColor;

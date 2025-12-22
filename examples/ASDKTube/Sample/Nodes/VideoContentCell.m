@@ -74,7 +74,7 @@
 - (NSDictionary*)titleNodeStringOptions
 {
   return @{
-     NSFontAttributeName : [UIFont systemFontOfSize:14.0],
+     NSFontAttributeName : [UIFont systemFontOfSize:13.0],
      NSForegroundColorAttributeName: [UIColor blackColor]
   };
 }
