@@ -596,6 +596,11 @@ static NSArray *DefaultLinkAttributeNames() {
     return nil;
   }
   
+  // Early return if there's no text to render to avoid unnecessary work and potential crashes
+  if (drawParameter->_rendererAttributes.attributedString.length == 0) {
+    return nil;
+  }
+  
   UIColor *backgroundColor = drawParameter->_backgroundColor;
   UIEdgeInsets textContainerInsets = drawParameter ? drawParameter->_textContainerInsets : UIEdgeInsetsZero;
   ASTextKitRenderer *renderer = [drawParameter rendererForBounds:drawParameter->_bounds];
