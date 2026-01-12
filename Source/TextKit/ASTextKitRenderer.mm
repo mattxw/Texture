@@ -195,6 +195,11 @@ static NSCharacterSet *_defaultAvoidTruncationCharacterSet()
   // We add an assertion so we can track the rare conditions where a graphics context is not present
   ASDisplayNodeAssertNotNil(context, @"This is no good without a context.");
 
+  // Bail early if there's no text to draw to avoid TextKit crashes with empty/nil attributed strings
+  if (_attributes.attributedString.length == 0) {
+    return;
+  }
+
   bounds = CGRectIntersection(bounds, { .size = _constrainedSize });
   CGRect shadowInsetBounds = [[self shadower] insetRectWithConstrainedRect:bounds];
 
@@ -212,6 +217,11 @@ static NSCharacterSet *_defaultAvoidTruncationCharacterSet()
   } else {
     BOOL isScaled = [self isScaled];
     [[self context] performBlockWithLockedTextKitComponents:^(NSLayoutManager *layoutManager, NSTextStorage *textStorage, NSTextContainer *textContainer) {
+      
+      // Verify textStorage has content before drawing to prevent crashes
+      if (textStorage.length == 0) {
+        return;
+      }
       
       NSTextStorage *scaledTextStorage = nil;
 
@@ -240,6 +250,12 @@ static NSCharacterSet *_defaultAvoidTruncationCharacterSet()
         [emptyTextStorage addLayoutManager:layoutManager];
       }
 
+      // Only draw if there are glyphs to draw
+      if (glyphRange.length > 0) {
+        [layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:shadowInsetBounds.origin];
+        [layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:shadowInsetBounds.origin];
+      }
+      
       [layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:shadowInsetBounds.origin];
       [layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:shadowInsetBounds.origin];
 
